@@ -17,7 +17,7 @@ public class HumanCreateDTO {
     private Double y;
 
     private boolean realHero;
-    private Boolean hasToothpick;
+    private boolean hasToothpick;
 
     // car
     private boolean carCool;
