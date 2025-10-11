@@ -91,7 +91,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
     @Override
     public HumanDTO updateHuman(HumanUpdateDTO dto){
-        HumanBeing entity = repository.findById(dto.getId()).orElseThrow();
+        HumanBeing entity = repository.findById(dto.getId()).orElseThrow(() -> new RuntimeException("runtime in service updateHuman dto.getId()"));
 
         entity.setName(dto.getName());
         entity.setCoordinates(new Coordinates(dto.getX(), dto.getY()));
