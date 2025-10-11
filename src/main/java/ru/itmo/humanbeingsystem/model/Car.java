@@ -9,5 +9,5 @@ import lombok.*;
 @AllArgsConstructor
 @Embeddable
 public class Car {
-    private boolean cool;
+    private Boolean cool;
 }

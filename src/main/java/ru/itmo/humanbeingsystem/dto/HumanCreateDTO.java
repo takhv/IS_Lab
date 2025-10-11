@@ -20,7 +20,7 @@ public class HumanCreateDTO {
     private boolean hasToothpick;
 
     // car
-    private boolean carCool;
+    private Boolean carCool;
 
     private String mood;
     private long impactSpeed;

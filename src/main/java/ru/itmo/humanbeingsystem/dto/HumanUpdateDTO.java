@@ -25,7 +25,7 @@ public class HumanUpdateDTO {
     private Boolean hasToothpick;
 
     // car
-    private boolean carCool;
+    private Boolean carCool;
 
     private String mood;
     private long impactSpeed;

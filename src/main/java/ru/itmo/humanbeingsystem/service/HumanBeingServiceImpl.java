@@ -3,12 +3,7 @@ package ru.itmo.humanbeingsystem.service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import javax.management.RuntimeErrorException;
-import javax.naming.NameNotFoundException;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,14 +30,13 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     }
 
     private HumanBeing convertToEntity(HumanCreateDTO dto){
-        // add null zapolneniya 
         HumanBeing entity = new HumanBeing();
         entity.setName(dto.getName());
         entity.setCoordinates(new Coordinates(dto.getX(), dto.getY()));
         entity.setRealHero(dto.isRealHero());
-        entity.setHasToothpick(dto.isHasToothpick());
-        entity.setCar(new Car(dto.isCarCool()));
-        entity.setMood(Mood.valueOf(dto.getMood()));
+        entity.setHasToothpick(dto.isHasToothpick()); 
+        entity.setCar(dto.getCarCool() != null ? new Car(dto.getCarCool()) : null);
+        entity.setMood(dto.getMood() != null ? Mood.valueOf(dto.getMood()) : null); 
         entity.setImpactSpeed(dto.getImpactSpeed());
         entity.setSoundtrackName(dto.getSoundtrackName());
         entity.setWeaponType(WeaponType.valueOf(dto.getWeaponType()));
@@ -50,7 +44,6 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     }
 
     private HumanDTO convertToDTO(HumanBeing entity){
-        // proverki na null i zapolnenie esli null
         HumanDTO dto = new HumanDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -59,8 +52,8 @@ public class HumanBeingServiceImpl implements HumanBeingService {
         dto.setCreationDate(entity.getCreationDate());
         dto.setRealHero(entity.isRealHero());
         dto.setHasToothpick(entity.getHasToothpick());
-        dto.setCarCool(entity.getCar().isCool());
-        dto.setMood(entity.getMood().toString());
+        dto.setCarCool(entity.getCar() != null ? entity.getCar().getCool() : null);
+        dto.setMood(entity.getMood() != null ? entity.getMood().toString() : null);
         dto.setImpactSpeed(entity.getImpactSpeed());
         dto.setSoundtrackName(entity.getSoundtrackName());
         dto.setWeaponType(entity.getWeaponType().toString());
@@ -97,7 +90,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
         entity.setCoordinates(new Coordinates(dto.getX(), dto.getY()));
         entity.setRealHero(dto.isRealHero());
         entity.setHasToothpick(dto.getHasToothpick());
-        entity.setCar(new Car(dto.isCarCool()));
+        entity.setCar(new Car(dto.getCarCool()));
         entity.setMood(Mood.valueOf(dto.getMood()));
         entity.setImpactSpeed(dto.getImpactSpeed());
         entity.setSoundtrackName(dto.getSoundtrackName());
@@ -109,7 +102,9 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
     @Override
     public void deleteById(Integer id){
-        // proverka chto id est'
+        if (!repository.existsById(id)){
+            throw new RuntimeException("there is no id " + id);
+        }
         repository.deleteById(id);
     }
 
@@ -132,10 +127,8 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
     @Override
     public List<String> uniqWeaponTypes(){
-
-        // zaglushka blin
-
-        return Collections.emptyList();
+        List<WeaponType> weaponTypes = repository.uniqWeaponTypes();
+        return weaponTypes.stream().map(Enum::toString).collect(Collectors.toList());
     }
 
     @Override
