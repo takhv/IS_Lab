@@ -1,7 +1,6 @@
 package ru.itmo.humanbeingsystem.model;
 
 import javax.persistence.*;
-
 import lombok.*;
 
 @Data
@@ -9,5 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Embeddable
 public class Car {
-    private Boolean cool;
+  private Boolean cool;
+  private String carType;
 }
