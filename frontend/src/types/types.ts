@@ -4,9 +4,9 @@ export interface HumanBeing {
   x: number;
   y: number;
   realHero: boolean;
-  hasToothpick: boolean;
-  carCool: boolean;
-  carType: string;
+  hasToothpick?: boolean | null;
+  carCool?: boolean | null;
+  carType: string | null;
   mood: string;
   impactSpeed: number;
   soundtrackName: string;

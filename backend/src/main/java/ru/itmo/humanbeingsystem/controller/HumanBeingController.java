@@ -1,5 +1,6 @@
 package ru.itmo.humanbeingsystem.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,37 @@ public class HumanBeingController {
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
     service.deleteById(id);
+    return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/weaponType")
+  public ResponseEntity<Long> countWeaponTypeGreaterThan(@RequestParam String weaponType) {
+    long result = service.countWeaponTypeGreaterThan(weaponType);
+    return ResponseEntity.ok(result);
+  }
+
+  @GetMapping("/soundtrack")
+  public ResponseEntity<List<HumanDTO>> soundtrackNameLessThan(
+      @RequestParam String soundtrackName) {
+    List<HumanDTO> result = service.soundtrackNameLessThan(soundtrackName);
+    return ResponseEntity.ok(result);
+  }
+
+  @GetMapping("/uniqWeapons")
+  public ResponseEntity<List<String>> uniqWeaponTypes() {
+    List<String> result = service.uniqWeaponTypes();
+    return ResponseEntity.ok(result);
+  }
+
+  @PutMapping("/sad")
+  public ResponseEntity<Void> allHumanSad() {
+    service.allHumanSad();
+    return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/lada")
+  public ResponseEntity<Void> giveLadaKalina() {
+    service.giveLadaKalina();
     return ResponseEntity.noContent().build();
   }
 }

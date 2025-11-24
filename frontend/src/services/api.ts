@@ -15,4 +15,9 @@ export const humanBeingApi = {
   create: (data: HumanBeingCreate) => api.post<HumanBeing>('/human-being', data),
   update: (data: HumanBeingUpdate) => api.put<HumanBeing>('/human-being', data),
   delete: (id: number) => api.delete(`/human-being/${id}`),
+  countWeaponTypeGreaterThan: (weaponType: string) => api.get<number>(`/human-being/weaponType?weaponType=${weaponType}`),
+  soundtrackNameLessThan: (soundtrackName: string) => api.get<HumanBeing[]>(`/human-being/soundtrack?soundtrackName=${soundtrackName}`),
+  uniqWeapons: () => api.get<string[]>(`/human-being/uniqWeapons`),
+  sadHuman: () => api.put<void>(`/human-being/sad`),
+  ladaKalina: () => api.put<void>(`/human-being/lada`),
 };

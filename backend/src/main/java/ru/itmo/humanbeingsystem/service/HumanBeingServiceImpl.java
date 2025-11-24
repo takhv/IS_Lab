@@ -11,11 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.itmo.humanbeingsystem.dto.*;
-import ru.itmo.humanbeingsystem.model.Car;
-import ru.itmo.humanbeingsystem.model.Coordinates;
-import ru.itmo.humanbeingsystem.model.HumanBeing;
-import ru.itmo.humanbeingsystem.model.Mood;
-import ru.itmo.humanbeingsystem.model.WeaponType;
+import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
 
 @Service
@@ -113,21 +109,14 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
   @Override
   public long countWeaponTypeGreaterThan(String weaponType) {
-
-    // zaglushka
-
-    return 3;
+    WeaponType weaponTypeEnum = WeaponType.valueOf(weaponType);
+    return repository.countWeaponTypeGreaterThan(weaponTypeEnum);
   }
 
   @Override
   public List<HumanDTO> soundtrackNameLessThan(String soundtrackName) {
-
-    // zaglushka
-
-    List<HumanBeing> allEntities = repository.findAll();
-    List<HumanDTO> allDTO =
-        allEntities.stream().map(this::convertToDTO).collect(Collectors.toList());
-    return allDTO;
+    List<HumanBeing> entities = repository.soundtrackNameLessThan(soundtrackName);
+    return entities.stream().map(this::convertToDTO).collect(Collectors.toList());
   }
 
   @Override
@@ -150,7 +139,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
   public void giveLadaKalina() {
     List<HumanBeing> allEntities = repository.findAll();
     for (HumanBeing human : allEntities) {
-      if (human.getCar() == null) {
+      if (human.getCar().getCarType() == null) {
         human.setCar(new Car(true, "red lada kalina"));
       }
     }
