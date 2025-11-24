@@ -91,14 +91,21 @@ const SpecialOperations: React.FC = () => {
             <Card.Body>
               <Card.Title>Количество героев с типом оружия больше...</Card.Title>
               <Form>
-                <Form.Group controlId="weaponTypeInput">
-                  <Form.Label>Тип оружия:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={weaponTypeInput}
-                    onChange={(e) => setWeaponTypeInput(e.target.value)}
-                    placeholder="Введите тип оружия (например, AXE)"
-                  />
+                <Form.Group controlId="weaponType">
+                    <Form.Label>Тип оружия *</Form.Label>
+                    <Form.Select
+                        name="weaponType"
+                        value={weaponTypeInput}
+                        onChange={(e) => setWeaponTypeInput(e.target.value)}
+                        required
+                    >
+                        <option value="">Выберите тип оружия</option>
+                        <option value="HAMMER">HAMMER</option>
+                        <option value="AXE">AXE</option>
+                        <option value="PISTOL">PISTOL</option>
+                        <option value="RIFLE">RIFLE</option>
+                        <option value="BAT">BAT</option>
+                    </Form.Select>
                 </Form.Group>
                 <Button variant="primary" onClick={handleCountByWeaponType} className="mt-2">
                   Подсчитать

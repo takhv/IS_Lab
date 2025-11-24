@@ -139,7 +139,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
   public void giveLadaKalina() {
     List<HumanBeing> allEntities = repository.findAll();
     for (HumanBeing human : allEntities) {
-      if (human.getCar().getCarType() == null) {
+      if (!human.getCar().getCool() && human.getCar().getCarType() == null) {
         human.setCar(new Car(true, "red lada kalina"));
       }
     }

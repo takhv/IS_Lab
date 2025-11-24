@@ -19,8 +19,8 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
     x: hero?.x || 0,
     y: hero?.y || 0,
     realHero: hero?.realHero || false,
-    hasToothpick: hero?.hasToothpick ?? undefined,  
-    carCool: hero?.carCool ?? undefined,
+    hasToothpick: hero?.hasToothpick ?? false,  
+    carCool: hero?.carCool ?? false,
     carType: hero?.carType || '',
     mood: hero?.mood || '',
     impactSpeed: hero?.impactSpeed || 0,
@@ -36,8 +36,8 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
         x: hero.x,
         y: hero.y,
         realHero: hero.realHero,
-        hasToothpick: hero.hasToothpick ?? undefined,
-        carCool: hero.carCool ?? undefined,
+        hasToothpick: hero.hasToothpick ?? false,
+        carCool: hero.carCool ?? false,
         carType: hero.carType || '',
         mood: hero.mood || '',
         impactSpeed: hero.impactSpeed,
@@ -52,7 +52,7 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
         y: 0,
         realHero: false,
         hasToothpick: undefined,
-        carCool: undefined,
+        carCool: false,
         carType: '',
         mood: '',
         impactSpeed: 0,
@@ -159,12 +159,17 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
 
           <Form.Group controlId="mood">
             <Form.Label>настроение *</Form.Label>
-            <Form.Control
-              type="text"
+            <Form.Select
               name="mood"
               value={formData.mood}
               onChange={handleChange}
-            />
+              required
+            >
+              <option value="">выберите настроение</option>
+              <option value="LONGING">LONGING</option>
+              <option value="APATHY">APATHY</option>
+              <option value="CALM">CALM</option>
+            </Form.Select>
           </Form.Group>
 
           <Form.Group controlId="impactSpeed">
@@ -190,14 +195,20 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
           </Form.Group>
 
           <Form.Group controlId="weaponType">
-            <Form.Label>тип оружия *</Form.Label>
-            <Form.Control
-              type="text"
+            <Form.Label>Тип оружия *</Form.Label>
+            <Form.Select
               name="weaponType"
               value={formData.weaponType}
               onChange={handleChange}
               required
-            />
+            >
+              <option value="">Выберите тип оружия</option>
+              <option value="HAMMER">HAMMER</option>
+              <option value="AXE">AXE</option>
+              <option value="PISTOL">PISTOL</option>
+              <option value="RIFLE">RIFLE</option>
+              <option value="BAT">BAT</option>
+            </Form.Select>
           </Form.Group>
         </Form>
       </Modal.Body>
