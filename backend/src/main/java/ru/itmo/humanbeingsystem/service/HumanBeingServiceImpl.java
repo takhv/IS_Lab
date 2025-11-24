@@ -65,7 +65,9 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
   @Override
   public HumanDTO findById(Integer id) {
-    HumanBeing entity = repository.findById(id)
+    HumanBeing entity =
+        repository
+            .findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     return convertToDTO(entity);
   }
@@ -78,7 +80,9 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
   @Override
   public HumanDTO updateHuman(HumanUpdateDTO dto) {
-    HumanBeing entity = repository.findById(dto.getId())
+    HumanBeing entity =
+        repository
+            .findById(dto.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     entity.setName(dto.getName());
@@ -135,7 +139,9 @@ public class HumanBeingServiceImpl implements HumanBeingService {
   public void giveLadaKalina() {
     List<HumanBeing> allEntities = repository.findAll();
     for (HumanBeing human : allEntities) {
-      if (!human.getCar().getCool() && human.getCar().getCarType() == null) {
+      if (human.getCar() == null
+          || (human.getCar().getCool() == false
+              && (human.getCar().getCarType() == "" || human.getCar().getCarType() == null))) {
         human.setCar(new Car(true, "red lada kalina"));
       }
     }
