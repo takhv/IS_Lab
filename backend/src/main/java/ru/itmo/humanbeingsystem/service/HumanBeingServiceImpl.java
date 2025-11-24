@@ -65,9 +65,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
   @Override
   public HumanDTO findById(Integer id) {
-    HumanBeing entity =
-        repository
-            .findById(id)
+    HumanBeing entity = repository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     return convertToDTO(entity);
   }
@@ -80,9 +78,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
   @Override
   public HumanDTO updateHuman(HumanUpdateDTO dto) {
-    HumanBeing entity =
-        repository
-            .findById(dto.getId())
+    HumanBeing entity = repository.findById(dto.getId())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     entity.setName(dto.getName());

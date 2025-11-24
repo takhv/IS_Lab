@@ -173,7 +173,7 @@ const HumanBeingModal: React.FC<HumanBeingModalProps> = ({ show, onHide, hero, o
           </Form.Group>
 
           <Form.Group controlId="impactSpeed">
-            <Form.Label>скорость</Form.Label>
+            <Form.Label>скорость *</Form.Label>
             <Form.Control
               type="number"
               name="impactSpeed"
