@@ -1,14 +1,15 @@
-// src/App.tsx
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import HumanBeingTable from './components/HumanBeingTable';
 import SpecialOperations from './components/SpecialOperations';
 import HumanBeingModal from './components/HumanBeingModal';
+import ImportPage from './components/ImportPage';
+import ImportHistoryPage from './components/ImportHistoryPage';
 import { HumanBeing, HumanBeingCreate, HumanBeingUpdate } from './types/types';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'table' | 'special'>('table');
+  const [activeTab, setActiveTab] = useState<'table' | 'special' | 'import' | 'import-history'>('table');
   const [showModal, setShowModal] = useState(false);
   const [editingHero, setEditingHero] = useState<HumanBeing | null>(null);
   const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
@@ -47,6 +48,8 @@ function App() {
           <Nav activeKey={activeTab} onSelect={(key) => setActiveTab(key as 'table' | 'special')}>
             <Nav.Link eventKey="table">Таблица героев</Nav.Link>
             <Nav.Link eventKey="special">Специальные операции</Nav.Link>
+            <Nav.Link eventKey="import">Импорт</Nav.Link>
+            <Nav.Link eventKey="import-history">История импорта</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -56,6 +59,8 @@ function App() {
           <HumanBeingTable onEdit={handleEdit} onAdd={handleAdd} />
         )}
         {activeTab === 'special' && <SpecialOperations />}
+        {activeTab === 'import' && <ImportPage />}
+        {activeTab === 'import-history' && <ImportHistoryPage />} 
 
         <HumanBeingModal
           show={showModal}

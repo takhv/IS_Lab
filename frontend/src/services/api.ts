@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { HumanBeing, HumanBeingCreate, HumanBeingUpdate } from '../types/types';
+import { ImportJSON } from '../types/types';
 
 const API_BASE_URL = 'http://localhost:3835/api';
 
@@ -20,4 +21,14 @@ export const humanBeingApi = {
   uniqWeapons: () => api.get<string[]>(`/human-being/uniqWeapons`),
   sadHuman: () => api.put<void>(`/human-being/sad`),
   ladaKalina: () => api.put<void>(`/human-being/lada`),
+  importFromJson: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post<ImportJSON>('/import', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+  getImportHistory: () => api.get<ImportJSON[]>('/import/history'),
 };
