@@ -55,6 +55,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return dto;
   }
 
+  @Transactional
   @Override
   public HumanDTO createHuman(HumanCreateDTO dto) {
     HumanBeing entity = convertToEntity(dto);
@@ -78,6 +79,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return entities.map(this::convertToDTO);
   }
 
+  @Transactional
   @Override
   public HumanDTO updateHuman(HumanUpdateDTO dto) {
     HumanBeing entity =
@@ -99,6 +101,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return convertToDTO(newEntity);
   }
 
+  @Transactional
   @Override
   public void deleteById(Integer id) {
     if (!repository.existsById(id)) {
@@ -125,6 +128,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return weaponTypes.stream().map(Enum::toString).collect(Collectors.toList());
   }
 
+  @Transactional
   @Override
   public void allHumanSad() {
     List<HumanBeing> allEntities = repository.findAll();
@@ -135,6 +139,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     repository.saveAll(allEntities);
   }
 
+  @Transactional
   @Override
   public void giveLadaKalina() {
     List<HumanBeing> allEntities = repository.findAll();
