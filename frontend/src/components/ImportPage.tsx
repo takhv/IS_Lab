@@ -61,7 +61,7 @@ const ImportPage: React.FC = () => {
           {loading ? (
             <>
               <Spinner as="span" animation="border" size="sm" role="status" />
-              {' '}Загрузка...
+              Загрузка...
             </>
           ) : (
             'Импортировать'
