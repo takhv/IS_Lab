@@ -153,4 +153,17 @@ public class HumanBeingServiceImpl implements HumanBeingService {
 
     repository.saveAll(allEntities);
   }
+
+  @Transactional
+  @Override
+  public void kurtCobain() {
+    List<HumanBeing> allEntities = repository.findAll();
+    for (HumanBeing human : allEntities) {
+      if (human.getMood() == Mood.LONGING && human.getWeaponType() == WeaponType.RIFLE) {
+        human.setSoundtrackName("Nirvana - Smells Like Teen Spirit");
+      }
+    }
+
+    repository.saveAll(allEntities);
+  }
 }

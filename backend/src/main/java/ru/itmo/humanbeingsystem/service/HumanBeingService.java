@@ -25,4 +25,6 @@ public interface HumanBeingService {
   void allHumanSad();
 
   void giveLadaKalina();
+
+  void kurtCobain();
 }
