@@ -15,7 +15,6 @@ import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
 
 @Service
-@Transactional
 public class HumanBeingServiceImpl implements HumanBeingService {
   @Autowired private HumanBeingRepository repository;
 
