@@ -31,4 +31,5 @@ export const humanBeingApi = {
     });
   },
   getImportHistory: () => api.get<ImportJSON[]>('/import/history'),
+  kurtCobain: () => api.put<void>(`/human-being/kurt`),
 };
