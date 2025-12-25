@@ -25,4 +25,7 @@ public class ImportJSON {
 
   @Column(name = "objects_count")
   private Integer objectsCount;
+
+  @Column(name = "file_name")
+  private String fileName;
 }

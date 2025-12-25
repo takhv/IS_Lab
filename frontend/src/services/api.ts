@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { HumanBeing, HumanBeingCreate, HumanBeingUpdate } from '../types/types';
 import { ImportJSON } from '../types/types';
 
@@ -32,4 +32,6 @@ export const humanBeingApi = {
   },
   getImportHistory: () => api.get<ImportJSON[]>('/import/history'),
   kurtCobain: () => api.put<void>(`/human-being/kurt`),
+  downloadFile: (id: number): Promise<AxiosResponse<Blob>> => api.get(`/import/history/${id}/download`, {responseType: 'blob',}),
+  deleteFile: (id: number) => api.delete(`/import/history/${id}`),
 };

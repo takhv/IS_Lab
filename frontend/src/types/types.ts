@@ -37,4 +37,5 @@ export interface ImportJSON {
   status: 'SUCCESS' | 'ERROR';
   importTime: string;
   objectsCount?: number;
+  fileName?: string;
 }

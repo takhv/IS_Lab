@@ -1,13 +1,15 @@
 package ru.itmo.humanbeingsystem.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import javax.transaction.Transactional;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import ru.itmo.humanbeingsystem.dto.*;
 import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
@@ -22,11 +24,16 @@ public class ImportJSONServiceImpl implements ImportJSONService {
 
   @Autowired private ObjectMapper objectMapper;
 
+  @Autowired private MinioService minioService;
+
   @Override
   @Transactional
   public ImportJSON importFromJSON(MultipartFile file) {
     ImportJSON importLog = new ImportJSON();
     importLog.setImportTime(LocalDateTime.now());
+
+    String minioFileName = minioService.uploadFile(file);
+    importLog.setFileName(minioFileName);
 
     try {
       byte[] fileBytes = file.getBytes();
@@ -45,19 +52,16 @@ public class ImportJSONServiceImpl implements ImportJSONService {
         successCount++;
       }
 
-      importLog.setStatus(ImportStatus.SUCCESS);
       importLog.setObjectsCount(successCount);
+      importLog.setStatus(ImportStatus.SUCCESS);
 
-    } catch (IOException e) {
-      importLog.setStatus(ImportStatus.ERROR);
-    } catch (IllegalArgumentException e) {
-      importLog.setStatus(ImportStatus.ERROR);
+      return importJSONRepository.save(importLog);
     } catch (Exception e) {
-      importLog.setStatus(ImportStatus.ERROR);
-      e.printStackTrace();
+      if (minioFileName != null) {
+        minioService.deleteFile(minioFileName);
+      }
+      throw new RuntimeException("Import failed", e);
     }
-
-    return importJSONRepository.save(importLog);
   }
 
   private HumanBeing convertToEntity(HumanCreateDTO dto) {
@@ -78,5 +82,18 @@ public class ImportJSONServiceImpl implements ImportJSONService {
   public List<ImportJSON> findAll() {
     List<ImportJSON> result = importJSONRepository.findAll();
     return result;
+  }
+
+  @Override
+  public Optional<ImportJSON> findById(Integer id) {
+    return importJSONRepository.findById(id);
+  }
+
+  @Override
+  public void deleteById(Integer id) {
+    if (!importJSONRepository.existsById(id)) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+    importJSONRepository.deleteById(id);
   }
 }
