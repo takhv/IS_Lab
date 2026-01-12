@@ -1,6 +1,6 @@
 package ru.itmo.humanbeingsystem.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data

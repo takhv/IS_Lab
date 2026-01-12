@@ -6,69 +6,77 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.9</version>
+        <relativePath/>
+    </parent>
+
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>2.7.18</spring.boot.version>
-        <spring.version>5.3.21</spring.version>
+        <java.version>17</java.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-bom</artifactId>
+                <version>15.2.6.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring.boot.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring.boot.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>2.7.18</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
-            <version>${spring.boot.version}</version>
         </dependency>
 
-        <!-- Java EE Annotations -->
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <!-- Validation -->
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>2.0.1.Final</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <!-- postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <optional>true</optional>
         </dependency>
 
-        <!-- minio -->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
@@ -79,44 +87,32 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>2.9.0</version>
+            <version>2.12.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.infinispan/infinispan-core -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
-            <version>9.1.5.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.infinispan/infinispan-commons -->
         <dependency>
             <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-commons</artifactId>
-            <version>9.1.5.Final</version>
-            <scope>compile</scope>
+            <artifactId>infinispan-jcache</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jcache -->
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jcache</artifactId>
-            <version>7.1.11.Final</version>
-            <type>pom</type>
-        </dependency>
+        </dependency> -->
 
-        <!-- JAXB API (для Hibernate) -->
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version> <!-- Или актуальная версия -->
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
         </dependency>
 
-        <!-- JAXB Runtime (для Java 9+) -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.1</version> <!-- Или та же версия, что и jaxb-api -->
         </dependency>
     </dependencies>
 
@@ -167,14 +163,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <mainClass>ru.itmo.humanbeingsystem.HumanBeingSystemApplication</mainClass>
                 </configuration>

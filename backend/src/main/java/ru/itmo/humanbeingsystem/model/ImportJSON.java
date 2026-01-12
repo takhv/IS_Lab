@@ -1,7 +1,7 @@
 package ru.itmo.humanbeingsystem.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
