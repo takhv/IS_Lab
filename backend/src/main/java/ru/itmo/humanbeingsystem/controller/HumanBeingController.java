@@ -76,4 +76,10 @@ public class HumanBeingController {
     service.giveLadaKalina();
     return ResponseEntity.noContent().build();
   }
+
+  @PutMapping("/kurt")
+  public ResponseEntity<Void> kurtCobain() {
+    service.kurtCobain();
+    return ResponseEntity.noContent().build();
+  }
 }

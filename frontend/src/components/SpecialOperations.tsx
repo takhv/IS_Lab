@@ -78,6 +78,17 @@ const SpecialOperations: React.FC = () => {
     }
   };
 
+  const handkeKurtCobain = async () => {
+    clearMessages();
+    try {
+      await humanBeingApi.kurtCobain();
+      setResultMessage('Все грустные персонажи с ружьем теперь слушают саундтрек "Smells Like Teen Spirit".');
+    } catch (err) {
+      console.error('Error setting soundtrack to Smells Like Teen Spirit:', err);
+      setError('Ошибка при установке саундтрека "Smells Like Teen Spirit"');
+    }
+  };
+
   return (
     <Container fluid className="mt-4">
       <h2>Специальные операции</h2>
@@ -165,6 +176,17 @@ const SpecialOperations: React.FC = () => {
               <Card.Title>Пересадить всех без машины на Lada Kalina</Card.Title>
               <Button variant="success" onClick={handleGiveLadaKalina}>
                 Пересадить
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+
+        <Col md={4} className="mb-4">
+          <Card>
+            <Card.Body>
+              <Card.Title>Установить всем саундтрек "Smells Like Teen Spirit"</Card.Title>
+              <Button variant="dark" onClick={handkeKurtCobain}>
+                Установить
               </Button>
             </Card.Body>
           </Card>

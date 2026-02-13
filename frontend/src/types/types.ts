@@ -31,3 +31,11 @@ export interface HumanBeingCreate {
 export interface HumanBeingUpdate extends HumanBeingCreate {
   id: number;
 }
+
+export interface ImportJSON {
+  id: number;
+  status: 'SUCCESS' | 'ERROR';
+  importTime: string;
+  objectsCount?: number;
+  fileName?: string;
+}

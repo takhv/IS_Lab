@@ -15,7 +15,6 @@ import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
 
 @Service
-@Transactional
 public class HumanBeingServiceImpl implements HumanBeingService {
   @Autowired private HumanBeingRepository repository;
 
@@ -55,6 +54,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return dto;
   }
 
+  @Transactional
   @Override
   public HumanDTO createHuman(HumanCreateDTO dto) {
     HumanBeing entity = convertToEntity(dto);
@@ -78,6 +78,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return entities.map(this::convertToDTO);
   }
 
+  @Transactional
   @Override
   public HumanDTO updateHuman(HumanUpdateDTO dto) {
     HumanBeing entity =
@@ -99,6 +100,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return convertToDTO(newEntity);
   }
 
+  @Transactional
   @Override
   public void deleteById(Integer id) {
     if (!repository.existsById(id)) {
@@ -125,6 +127,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return weaponTypes.stream().map(Enum::toString).collect(Collectors.toList());
   }
 
+  @Transactional
   @Override
   public void allHumanSad() {
     List<HumanBeing> allEntities = repository.findAll();
@@ -135,6 +138,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     repository.saveAll(allEntities);
   }
 
+  @Transactional
   @Override
   public void giveLadaKalina() {
     List<HumanBeing> allEntities = repository.findAll();
@@ -143,6 +147,18 @@ public class HumanBeingServiceImpl implements HumanBeingService {
           || (human.getCar().getCool() == false
               && (human.getCar().getCarType() == "" || human.getCar().getCarType() == null))) {
         human.setCar(new Car(true, "red lada kalina"));
+      }
+    }
+
+    repository.saveAll(allEntities);
+  }
+
+  @Override
+  public void kurtCobain() {
+    List<HumanBeing> allEntities = repository.findAll();
+    for (HumanBeing human : allEntities) {
+      if (human.getMood() == Mood.LONGING && human.getWeaponType() == WeaponType.RIFLE) {
+        human.setSoundtrackName("Nirvana - Smells Like Teen Spirit");
       }
     }
 
