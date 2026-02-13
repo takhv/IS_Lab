@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.ehcache.org/v3"
+    xmlns:jsr107="http://www.ehcache.org/v3/jsr107">
+
+  <service>
+    <jsr107:defaults enableManagement="true" enableStatistics="true"/>
+  </service>
+
+  <cache alias="ru.itmo.humanbeingsystem.model.HumanBeing">
+    <key-type>java.lang.Integer</key-type>
+    <value-type>ru.itmo.humanbeingsystem.model.HumanBeing</value-type>
+    <heap unit="entries">1000</heap>
+  </cache>
+
+  <cache alias="ru.itmo.humanbeingsystem.model.ImportJSON">
+    <key-type>java.lang.Integer</key-type>
+    <value-type>ru.itmo.humanbeingsystem.model.ImportJSON</value-type>
+    <heap unit="entries">1000</heap>
+  </cache>
+
+</config>
+
