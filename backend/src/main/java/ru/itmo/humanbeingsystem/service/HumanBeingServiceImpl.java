@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import ru.itmo.humanbeingsystem.aspect.CacheStatsTracked;
 import ru.itmo.humanbeingsystem.dto.*;
 import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
@@ -63,6 +64,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return convertToDTO(savedEntity);
   }
 
+  @CacheStatsTracked
   @Override
   public HumanDTO findById(Integer id) {
     HumanBeing entity =
@@ -72,6 +74,7 @@ public class HumanBeingServiceImpl implements HumanBeingService {
     return convertToDTO(entity);
   }
 
+  @CacheStatsTracked
   @Override
   public Page<HumanDTO> findAll(Pageable pageable) {
     Page<HumanBeing> entities = repository.findAll(pageable);

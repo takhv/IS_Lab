@@ -1,6 +1,6 @@
 package ru.itmo.humanbeingsystem.dto;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Data

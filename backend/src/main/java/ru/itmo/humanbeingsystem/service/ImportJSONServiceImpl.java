@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import ru.itmo.humanbeingsystem.aspect.CacheStatsTracked;
 import ru.itmo.humanbeingsystem.dto.*;
 import ru.itmo.humanbeingsystem.model.*;
 import ru.itmo.humanbeingsystem.repository.HumanBeingRepository;
@@ -78,12 +79,14 @@ public class ImportJSONServiceImpl implements ImportJSONService {
     return entity;
   }
 
+  @CacheStatsTracked
   @Override
   public List<ImportJSON> findAll() {
     List<ImportJSON> result = importJSONRepository.findAll();
     return result;
   }
 
+  @CacheStatsTracked
   @Override
   public Optional<ImportJSON> findById(Integer id) {
     return importJSONRepository.findById(id);

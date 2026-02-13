@@ -1,16 +1,20 @@
 package ru.itmo.humanbeingsystem.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "imports")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ImportJSON {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

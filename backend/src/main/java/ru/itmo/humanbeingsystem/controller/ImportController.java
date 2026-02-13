@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.itmo.humanbeingsystem.aspect.CacheStatsTracked;
 import ru.itmo.humanbeingsystem.model.ImportJSON;
 import ru.itmo.humanbeingsystem.service.ImportJSONService;
 import ru.itmo.humanbeingsystem.service.MinioService;
@@ -28,6 +29,7 @@ public class ImportController {
     return ResponseEntity.ok(result);
   }
 
+  @CacheStatsTracked
   @GetMapping("/history")
   public ResponseEntity<List<ImportJSON>> getImportHistory() {
     List<ImportJSON> result = importService.findAll();
